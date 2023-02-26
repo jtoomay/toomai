@@ -48,7 +48,7 @@ export default function Home() {
 }
 
 // Wrapper Styles
-const Wrapper = tw.div`relative h-[calc(100% - 6rem)]`
+const Wrapper = tw.div`relative h-full`
 const Title = tw.h1`text-3xl text-center pb-4`
 
 // Form Styles
