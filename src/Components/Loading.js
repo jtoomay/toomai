@@ -9,7 +9,7 @@ export default function Loading() {
         )
 }
 
-const Styles = styled.div(() => [tw``, css`
+const Styles = styled.div(() => [tw`mx-auto`, css`
 .lds-spinner {
     color: official;
     display: inline-block;
