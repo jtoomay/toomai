@@ -5,35 +5,40 @@ import useOpenAI from '../Hooks/useOpenAI'
 
 
 export default function Home() {
-
-    const {responses, loading, error, resetResponses, generate} = useOpenAI()
-
-    const [prompt, setPrompt] = useState('')
+  // Pull out the needed functions and variables from the useOpenAI hook
+  const {responses, loading, error, resetResponses, generate} = useOpenAI()
+  // Create a state variable for the prompt
+  const [prompt, setPrompt] = useState('')
 
   const scrollToRef = useRef()
   const loadingRef = useRef()
 
+  // Function that will fire when the user clicks the Go! button
   const handleGo = () => {
     if (!prompt) return
     generate(prompt)
     setPrompt('')
   }
+  // Function that will fire when the user presses the enter key
   const handleEnter = e => e.key === 'Enter' && handleGo()
   
+  // Scroll to the bottom of the chat history when the loading state changes
   useEffect(() => {
     if (!loading && scrollToRef.current) scrollToRef.current.scrollIntoView({ behavior: 'smooth' })
   }, [loading])
+  // Scroll to the bottom of the chat history when the prompt changes
   useEffect(() => {
     if (scrollToRef.current) scrollToRef.current.scrollIntoView({ behavior: 'smooth' })
-  }, [prompt])
+  }, [prompt]) 
 
   return (
         <Wrapper>
-            <Title>Chat with Jake</Title>
+            <Title>Chat with AI Jake</Title>
             <History>
                 {responses.map((text, index) => {
                     const lastMessage = index + 1 === responses.length 
                     const myMessage = text.includes("Me:")                    
+                    // If the message is the last message, set the ref to the scrollToRef, If not, set it to undefined
                     return <Message myMessage={myMessage} ref={lastMessage ? scrollToRef : undefined}>{text}</Message>
                 })}
                 {loading && <Loading ref={loadingRef} />}
