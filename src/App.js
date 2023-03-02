@@ -5,13 +5,13 @@ import  useOpenAI  from './Hooks/useOpenAI';
 
 function App() {
 
-  const {resetResponses} = useOpenAI()
+
 
   return (
     <Wrapper>
       <NavBar>
         <LogoImg  src={logo} alt="Logo" />
-        <ClearBtn onClick={() => resetResponses()}>Clear</ClearBtn>
+
       </NavBar>
       
       <Content>
@@ -30,4 +30,3 @@ const LogoImg = tw.img`h-20 w-[15rem]`
 
 
 
-const ClearBtn = tw.button`bg-blue-600 text-white px-4 py-2 rounded-md text-lg font-bold mr-4`
