@@ -1,7 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import tw from 'twin.macro';
 import logo from './Assets/Logo.png'
-import  useOpenAI  from './Hooks/useOpenAI';
 
 function App() {
 
