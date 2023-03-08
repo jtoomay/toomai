@@ -44,16 +44,21 @@ export default function Home() {
           const message = content.split('```')
           console.log(message, "message")
           // If the message is the last message, set the ref to the scrollToRef, If not, set it to undefined
-          return <Message myMessage={role === 'user'} ref={lastMessage ? scrollToRef : undefined}>{message.map((text, index) => { 
-            if(index % 2 === 0) return text
+          return <Message myMessage={role === 'user'} ref={lastMessage ? scrollToRef : undefined}>{message.map((text, index) => {
+            if (index % 2 === 0) return text
             else {
               let language;
-              if(text.includes("python") ) language = "python"
-              return <SyntaxHighlighter language="javascript" style={dark} key={text}>{text}</SyntaxHighlighter>
+              if (text.includes("python")) {
+                language = "python"
+              } else if (text.includes('javascript')) { language = "javascript" }
+              else {
+                language = "javascript" // TODO: Make this better
+              }
+              return <SyntaxHighlighter language={language} style={dark} key={text}>{text}</SyntaxHighlighter>
             }
           })}</Message>
         })}
- 
+
         {loading && <Loading ref={loadingRef} />}
         {error && <ErrorText>An Unexpected Error occured</ErrorText>}
       </History>
