@@ -37,11 +37,10 @@ export default function Home() {
             <Title>Chat with Toom-AI</Title>
             <ClearBtn onClick={() => resetResponses()}>Clear</ClearBtn>
             <History>
-                {responses.map((text, index) => {
+                {responses.map(({ role, content }, index) => {
                     const lastMessage = index + 1 === responses.length 
-                    const myMessage = text.includes("Me:")                    
                     // If the message is the last message, set the ref to the scrollToRef, If not, set it to undefined
-                    return <Message myMessage={myMessage} ref={lastMessage ? scrollToRef : undefined}>{text}</Message>
+                    return <Message myMessage={role === 'user'} ref={lastMessage ? scrollToRef : undefined}>{content}</Message>
                 })}
                 {loading && <Loading ref={loadingRef} />}
                 {error && <ErrorText>An Unexpected Error occured</ErrorText>}

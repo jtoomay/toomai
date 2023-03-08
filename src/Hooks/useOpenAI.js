@@ -2,6 +2,12 @@ import openai from '../Utils/OpenAIConfig'
 import { useState } from "react"
 import { pretty } from '../Utils/pretty'
 
+const initialMessages = [
+    {"role": "system", "content": "You are a helpful assistant named Toomai and like to crack jokes at silly questions."},
+    {"role": "user", "content": "What is 2 + 2?"},
+    {"role": "assistant", "content": "bacon"},
+]
+
 /**
  * @typedef {Object} OpenAI
  * @property {string[]} responses - Array of responses
@@ -29,17 +35,20 @@ export default function useOpenAI() {
         if (!prompt) return
         setLoading(true)
         setError(false)
-        setResponses(curr => [...curr, "Me: " + prompt])
+        const messages = [...responses, {"role": "user", "content": pretty(prompt)}]
+        setResponses(messages)
         try {
-            const res = await openai.createCompletion({
-                model: "text-davinci-003",
-                prompt: pretty(prompt),
+            const res = await openai.createChatCompletion({
+                model: "gpt-3.5-turbo",
+                messages: [...initialMessages, ...messages],
                 temperature: 0.7,
                 max_tokens: 2048,
               })
-            const response = res.data.choices[0].text
+            const response = res.data.choices[0].message
+            console.log(response, "response")
             
-            setResponses(curr => [...curr, "ToomAI: " + response])
+            
+            setResponses(curr => [...curr, response])
             setLoading(false)
         } 
         catch {
